@@ -1,0 +1,74 @@
+name: Deploy DASHBOARD ECOBE
+
+on:
+  push:
+    branches: [master]
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+jobs:
+  deploy:
+    name: Deploy do site Nuxt para S3
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v5
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+
+      - name: Ativar pnpm com corepack
+        run: |
+          corepack enable
+          corepack prepare pnpm@10 --activate
+          pnpm --version
+
+      - name: Instalar dependências e gerar site
+        run: |
+          pnpm install --frozen-lockfile
+          pnpm run generate
+
+      - name: Configurar credenciais AWS
+        uses: aws-actions/configure-aws-credentials@v5
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Enviar arquivos gerados para o S3
+        env:
+          BUCKET_NAME: ${{ secrets.BUCKET_NAME }}
+        run: |
+          OUTPUT_DIR=".output/public"
+
+          if [ ! -d "$OUTPUT_DIR" ]; then
+            echo "⚠️ Diretório $OUTPUT_DIR não encontrado. Tentando 'dist'..."
+            OUTPUT_DIR="dist"
+          fi
+
+          if [ ! -d "$OUTPUT_DIR" ]; then
+            echo "❌ Nenhum diretório de build encontrado (.output/public ou dist)"
+            exit 1
+          fi
+
+          echo "📂 Sincronizando arquivos de $OUTPUT_DIR para s3://$BUCKET_NAME"
+          aws s3 sync "$OUTPUT_DIR" "s3://$BUCKET_NAME" --delete \
+            --exclude ".DS_Store"
+
+          echo "🧾 Ajustando cache do index.html"
+          aws s3 cp "$OUTPUT_DIR/index.html" "s3://$BUCKET_NAME/index.html" \
+            --cache-control "no-cache" \
+            --content-type "text/html"
+
+      - name: Invalidar cache do CloudFront
+        env:
+          CLOUDFRONT_DISTRIBUTION_ID: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
+        run: |
+          echo "🧹 Invalidando cache da distribuição $CLOUDFRONT_DISTRIBUTION_ID"
+          aws cloudfront create-invalidation \
+            --distribution-id "$CLOUDFRONT_DISTRIBUTION_ID" \
+            --paths "/index.html"
