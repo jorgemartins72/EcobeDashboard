@@ -10,6 +10,9 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@formkit/icons": "^2.0.0",
+    "@formkit/nuxt": "^2.0.0",
+    "@formkit/themes": "^2.0.0",
     "@nuxt/icon": "^2.1.1",
     "@nuxt/ui": "^4.2.1",
     "@nuxtjs/google-fonts": "^3.2.0",

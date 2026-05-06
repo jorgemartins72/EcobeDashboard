@@ -18,11 +18,6 @@
   --font-alt2: 'Barlow Condensed', sans-serif;
   --font-alt3: 'Roboto Condensed', sans-serif;
 }
-@layer base {
-  body {
-    @apply text-slate-800;
-  }
-}
 
 @utility font-alt {
   font-family: var(--font-alt);
@@ -34,4 +29,17 @@
 
 @utility font-alt3 {
   font-family: var(--font-alt3);
+}
+
+@source inline("![font-family:var(--font-alt)]");
+@source inline("![font-family:var(--font-alt2)]");
+@source inline("![font-family:var(--font-alt3)]");
+
+@source "../formkit.theme.ts";
+@source "../formkit.config.ts";
+
+@layer base {
+  body {
+    @apply text-slate-800;
+  }
 }

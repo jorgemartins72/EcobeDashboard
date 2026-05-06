@@ -16,7 +16,7 @@ export default defineNuxtConfig({
     '@/assets/css/tailwind.css',
   ],
 
-  modules: ['@nuxtjs/google-fonts', '@nuxt/ui', '@nuxt/icon'],
+  modules: ['@nuxtjs/google-fonts', '@nuxt/ui', '@nuxt/icon', '@formkit/nuxt'],
 
   googleFonts: {
     display: 'swap',
