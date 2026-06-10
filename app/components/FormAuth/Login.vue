@@ -62,7 +62,7 @@ const { api } = useApi()
 const { setSession } = useSession()
 const { isLoading: loading, withLoading } = useLoadingButton()
 
-const form = reactive({ email: '', password: '' })
+const form = reactive({ email: 'jorgemartins72@gmail.com', password: 'xxxxx' })
 const showPassword = ref(false)
 
 function handleLogin() {
@@ -79,7 +79,11 @@ function handleLogin() {
       toast.success('Logado com sucesso')
       await navigateTo('/')
     } catch (err) {
-      toast.error(err?.data?.detail?.message || err?.data?.message || 'E-mail ou senha incorretos')
+      if (err?.data?.detail?.code === 'PASSWORD_NOT_SET') {
+        goTo('primeiro-acesso')
+      } else {
+        toast.error(err?.data?.detail?.message || err?.data?.message || 'E-mail ou senha incorretos')
+      }
     }
   })
 }
