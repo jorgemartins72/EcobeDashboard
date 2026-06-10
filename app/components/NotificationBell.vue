@@ -60,7 +60,7 @@ onBeforeUnmount(() => {
       label=" "
       color="error"
       variant="solid"
-      class="absolute top-0.5 -right-0.5 z-10 !min-w-2.5 !w-2.5 !h-2.5 !rounded-full !p-0"
+      class="absolute top-0.5 -right-0.5 z-10 min-w-2.5! w-2.5! h-2.5! rounded-full! p-0!"
     />
   </div>
 </template>
