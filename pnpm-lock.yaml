@@ -17,6 +17,9 @@ importers:
       '@formkit/themes':
         specifier: ^2.0.0
         version: 2.0.0
+      '@jorgemartins72/cliente-session':
+        specifier: ^0.1.1
+        version: 0.1.1
       '@nuxt/icon':
         specifier: ^2.1.1
         version: 2.2.1(magicast@0.5.2)(vite@7.3.1(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.1)(yaml@2.8.3))(vue@3.5.31(typescript@5.9.3))
@@ -458,6 +461,9 @@ packages:
   '@isaacs/fs-minipass@4.0.1':
     resolution: {integrity: sha512-wgm9Ehl2jpeqP3zw/7mo3kRHFp5MEDhqAdwy1fTGkHAwnkGOVsgpvQhL8B5n1qlb01jV3n/bI0ZfZp5lWA1k4w==}
     engines: {node: '>=18.0.0'}
+
+  '@jorgemartins72/cliente-session@0.1.1':
+    resolution: {integrity: sha512-Q0TZxejmPnlUI0CSrO/Pe9jAS5osvgaatBEeM6Kf/5SHgM8Hv8yNssN5sUeRhdswtfX34v9prTK06OAX2J56/w==}
 
   '@jridgewell/gen-mapping@0.3.13':
     resolution: {integrity: sha512-2kkt/7niJ6MgEPxF0bYdQ6etZaA+fQvDcLKckhy1yIQOzaoKjBBjSj63/aLVjYE3qhRt5dvM+uUyfCg6UKCBbA==}
@@ -4679,6 +4685,8 @@ snapshots:
   '@isaacs/fs-minipass@4.0.1':
     dependencies:
       minipass: 7.1.3
+
+  '@jorgemartins72/cliente-session@0.1.1': {}
 
   '@jridgewell/gen-mapping@0.3.13':
     dependencies:
