@@ -28,6 +28,9 @@ jobs:
           pnpm --version
 
       - name: Instalar dependências e gerar site
+        env:
+          NUXT_PUBLIC_API_BASE: ${{ secrets.NUXT_PUBLIC_API_BASE }}
+          NUXT_PUBLIC_API_KEY: ${{ secrets.NUXT_PUBLIC_API_KEY }}
         run: |
           pnpm install --frozen-lockfile
           pnpm run generate

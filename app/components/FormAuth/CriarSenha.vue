@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p class="text-2xl font-semibold">Criar senha</p>
+    <p class="text-2xl font-semibold mb-8">Criar senha</p>
     <p class="text-base">Defina uma senha para acessar o sistema.</p>
     <div class="mt-2">
       <FormKit type="group">

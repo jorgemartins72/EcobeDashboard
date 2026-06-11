@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p class="text-2xl font-semibold">Verificar código</p>
+    <p class="text-2xl font-semibold mb-8">Verificar código</p>
     <p class="text-base">Digite o código enviado para o seu e-mail para continuar.</p>
     <div class="mt-2">
       <FormKit type="group">
