@@ -1,24 +1,10 @@
 <template>
-  <UDashboardPanel>
-    <template #header>
-      <UDashboardNavbar title="Materiais" :ui="{root: 'h-12 sm:px-3', title: 'text-3xl font-sans -tracking-[.05em]'}">
-
-        <template #right>
-          <NotificationBell :alert="!false" />
-        </template>
-
-      </UDashboardNavbar>
-    </template>
-  </UDashboardPanel>
+  <div class="p-6">
+    <h1 class="text-2xl font-bold mb-4">Materiais</h1>
+    <p>Conteúdo da página de Materiais.</p>
+  </div>
 </template>
 
 <script setup>
-definePageMeta({
-  layout: 'dash',
-})
 
 </script>
-
-<style scoped>
-
-</style>

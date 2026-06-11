@@ -14,6 +14,25 @@
   --color-hard: #6d0d0d;
   --color-dark: #292828;
   --default-font-color: var(--color-hard);
+
+  --color-ecobe-50:  #fff2f2;
+  --color-ecobe-100: #ffd9d9;
+  --color-ecobe-200: #ffb0b0;
+  --color-ecobe-300: #f87070;
+  --color-ecobe-400: #e03030;
+  --color-ecobe-500: #b31515;
+  --color-ecobe-600: #8b0e0e;
+  --color-ecobe-700: #6d0d0d;
+  --color-ecobe-800: #4a0808;
+  --color-ecobe-900: #2d0505;
+  --color-ecobe-950: #190202;
+
+  --color-sidebar:              var(--color-slate-950);
+  --color-sidebar-border:       var(--color-slate-800);
+  --color-sidebar-hover:        var(--color-slate-800);
+  --color-sidebar-active:       var(--color-slate-700);
+  --color-sidebar-accent:       var(--color-ecobe-500);
+  --color-sidebar-accent-muted: var(--color-ecobe-950);
   --font-alt: 'Archivo Narrow', sans-serif;
   --font-alt2: 'Barlow Condensed', sans-serif;
   --font-alt3: 'Roboto Condensed', sans-serif;
@@ -45,6 +64,22 @@
 }
 
 @layer components {
+  .nav-item {
+    transition: background 0.15s, color 0.15s;
+  }
+  .nav-item:hover:not(.active) {
+    background: var(--color-sidebar-hover);
+  }
+  .nav-item.active {
+    background: var(--color-sidebar-active);
+    color: var(--color-sidebar-accent);
+  }
+
+  .scrollbar-sidebar::-webkit-scrollbar { width: 4px; }
+  .scrollbar-sidebar::-webkit-scrollbar-track { background: transparent; }
+  .scrollbar-sidebar::-webkit-scrollbar-thumb { background: var(--color-sidebar-border); border-radius: 2px; }
+  .scrollbar-sidebar::-webkit-scrollbar-thumb:hover { background: var(--color-sidebar-hover); }
+
   .is-loading .formkit-input {
     opacity: 0.7;
     cursor: not-allowed;

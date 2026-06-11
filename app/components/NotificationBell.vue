@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from 'vue'
+import { ref, watch, onBeforeUnmount } from 'vue'
 
 const props = defineProps({
   alert: {
@@ -15,23 +15,22 @@ function playBell() {
   const playOnce = (delay = 0) => {
     setTimeout(() => {
       animate.value = true
-      setTimeout(() => {
-        animate.value = false
-      }, 600)
+      setTimeout(() => { animate.value = false }, 600)
     }, delay)
   }
-
   playOnce(0)
   playOnce(800)
   playOnce(1600)
 }
 
-onMounted(() => {
-  if (props.alert) {
+watch(() => props.alert, (val) => {
+  if (intervalId) { clearInterval(intervalId); intervalId = null }
+  animate.value = false
+  if (val) {
     playBell()
     intervalId = setInterval(playBell, 10000)
   }
-})
+}, { immediate: true })
 
 onBeforeUnmount(() => {
   if (intervalId) clearInterval(intervalId)
