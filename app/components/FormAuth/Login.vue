@@ -62,7 +62,7 @@ const { api } = useApi()
 const { setSession } = useSession()
 const { isLoading: loading, withLoading } = useLoadingButton()
 
-const form = reactive({ email: 'jomackroll@gmail.com', password: 'ddddd' })
+const form = reactive({ email: '', password: '' })
 const showPassword = ref(false)
 
 function handleLogin() {
