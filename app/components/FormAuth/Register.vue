@@ -72,7 +72,12 @@ function handleRegister() {
       toast.success(res.message || 'Cadastro realizado com sucesso')
       goTo('login')
     } catch (err) {
-      toast.error(err?.data?.message || 'Erro ao tentar cadastrar')
+      const code = err?.data?.detail?.code
+      if (code === 'EMAIL_ALREADY_EXISTS') {
+        toast.warning(err?.data?.detail?.message || 'E-mail já cadastrado.')
+      } else {
+        toast.warning(err?.data?.detail?.message || err?.data?.message || 'Erro ao tentar cadastrar')
+      }
     }
   })
 }
