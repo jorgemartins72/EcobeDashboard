@@ -6,7 +6,7 @@
     >
       <div
         ref="titleRef"
-        class="text-[3rem] font-bold text-center mb-12 tracking-tighter"
+        class="text-[3rem] font-bold text-center mb-12 tracking-tighter text-shadow-lg/20"
         :style="{ transform: `translateY(${titleOffset}px)`, transition: titleTransition }"
       >Ecobé</div>
       <div ref="contentRef">

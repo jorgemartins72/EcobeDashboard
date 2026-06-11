@@ -50,7 +50,12 @@ function handleForgot() {
       toast.success('Código enviado para o e-mail informado.')
       goTo('forgot-verificar', { email: form.email })
     } catch (err) {
-      toast.big_warning(err?.data?.detail?.message || err?.data?.message || 'Erro ao solicitar recuperação de senha')
+      const code = err?.data?.detail?.code
+      if (code === 'EMAIL_NOT_FOUND') {
+        toast.warning(err?.data?.detail?.message || 'E-mail não encontrado.')
+      } else {
+        toast.big_warning(err?.data?.detail?.message || err?.data?.message || 'Erro ao solicitar recuperação de senha')
+      }
     }
   })
 }
