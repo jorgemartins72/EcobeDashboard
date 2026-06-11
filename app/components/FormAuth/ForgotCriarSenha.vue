@@ -78,7 +78,7 @@ function handleCriar() {
       toast.success(res.message || 'Senha redefinida com sucesso!')
       goTo('login')
     } catch (err) {
-      toast.error(err?.data?.message || 'Erro ao redefinir senha')
+      toast.error(err?.data?.detail || 'Erro ao redefinir senha')
     }
   })
 }
