@@ -5,8 +5,8 @@ export function useApi() {
 
   function api<T>(path: string, options: Parameters<typeof $fetch>[1] = {}) {
     if (!apiKey) {
-      toast.error('API Key não configurada. Defina NUXT_PUBLIC_API_KEY no arquivo .env')
-      return Promise.reject(new Error('API Key não configurada'))
+      toast.error('API Key ausente. Verifique a configuração do servidor.')
+      return new Promise<T>(() => {})
     }
 
     const { access_token } = getSession()
@@ -20,7 +20,12 @@ export function useApi() {
         ...(options?.headers ?? {}),
       },
       onResponseError({ response }) {
-        if (response.status === 401) {
+        const code = response._data?.detail?.code
+        if (code === 'API_KEY_INVALID') {
+          toast.error('API Key inválida!!!') // Verifique NUXT_PUBLIC_API_KEY no arquivo .env
+        } else if (code === 'API_KEY_INACTIVE') {
+          toast.error('API Key inativa. Entre em contato com o administrador.')
+        } else if (response.status === 401) {
           clearSession()
           navigateTo('/auth')
         }

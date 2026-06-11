@@ -17,61 +17,13 @@
 
       <!-- Navegação -->
       <nav class="flex-1 overflow-y-auto px-3 py-4 space-y-0.5 scrollbar-sidebar">
-        <p class="text-[10px] font-semibold uppercase tracking-widest text-gray-600 px-3 mb-2">
-          Principal
-        </p>
-
-        <NuxtLink
-          v-for="item in navPrincipal"
-          :key="item.to"
-          :to="item.to"
-          class="nav-item flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-gray-400"
-          :class="{ active: route.path === item.to }"
-        >
-          <Icon :name="item.icon" class="w-4 h-4 shrink-0" />
-          {{ item.label }}
-        </NuxtLink>
-
-        <p class="text-[10px] font-semibold uppercase tracking-widest text-gray-600 px-3 mb-2 mt-5">
-          Sistema
-        </p>
-
-        <NuxtLink
-          v-for="item in navSistema"
-          :key="item.to"
-          :to="item.to"
-          class="nav-item flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-gray-400"
-          :class="{ active: route.path === item.to }"
-        >
-          <Icon :name="item.icon" class="w-4 h-4 shrink-0" />
-          {{ item.label }}
-        </NuxtLink>
-
-
-
-
-
-
-        <UNavigationMenu
-          :items="links[0]"
-          orientation="vertical"
-          tooltip
-          popover
-        />
-
+        <NavMenuAdmin class="mb-8" />
       </nav>
-
-
-
-
-
-
-
 
       <!-- Rodapé do usuário -->
       <div class="shrink-0 border-t border-sidebar-border px-4 py-3">
+        <!--
         <div class="flex items-center gap-3">
-<!--
           <div class="w-7 h-7 rounded-full bg-sidebar-accent-muted flex items-center justify-center text-xs font-semibold text-ecobe-400 shrink-0">
             JM
           </div>
@@ -82,8 +34,8 @@
           <button class="text-gray-500 hover:text-gray-300 transition-colors">
             <Icon name="i-lucide-log-out" class="w-4 h-4" />
           </button>
- -->
         </div>
+        -->
       </div>
     </aside>
 
@@ -100,11 +52,24 @@
       <!-- Ações -->
       <div class="flex items-center gap-3">
 
-        <NotificationBell :alert="false" />
+        <!-- <NotificationBell :alert="false" /> -->
 
-        <div class="w-7 h-7 rounded-full bg-ecobe-100 flex items-center justify-center text-xs font-semibold text-ecobe-700 cursor-pointer">
-          AA
+        <div class="flex items-center gap-3 select-none">
+          <UAvatar :alt="usuario" size="md" :ui="{ root: 'bg-ecobe-400', fallback: 'text-white' }" />
+          <div class="flex-1 min-w-0">
+            <p class="text-xs font-medium truncate line-clamp-1">
+              {{usuario}}
+            </p>
+            <p class="text-[11px] text-gray-500 truncate">
+              {{role}}
+            </p>
+          </div>
+          <button class="text-gray-500 hover:text-gray-800 transition-colors cursor-pointer" @click="handleSair">
+            <Icon name="i-lucide-log-out" class="w-4 h-4" />
+          </button>
         </div>
+
+
       </div>
     </header>
 
@@ -119,101 +84,29 @@
 </template>
 
 <script setup lang="ts">
+import type { NavigationMenuItem } from '@nuxt/ui'
+import { useMenu } from '../composables/useMenu'
+import { useSession } from '../composables/useSession'
+import menuAdmin from '../data/menu_admin.json'
+
 const route = useRoute()
+const { allItems } = useMenu(menuAdmin as NavigationMenuItem[][])
 
-const navPrincipal = [
-  { to: '/', label: 'Início', icon: 'i-lucide-house' },
-  // { to: '/clientes', label: 'Clientes', icon: 'i-lucide-users' },
-  { to: '/a/materiais', label: 'Materiais', icon: 'i-lucide-box' },
-  { to: '/materiais', label: 'Materiais Exemplo', icon: 'i-lucide-package-x' },
-  // { to: '/analytics', label: 'Analytics', icon: 'i-lucide-bar-chart-2' },
-  // { to: '/pagamentos', label: 'Pagamentos', icon: 'i-lucide-credit-card' },
-]
+const { clearSession, getSession } = useSession()
+const user = getSession().user
+const usuario = computed(() => `${user.first_name} ${user.last_name}`)
+const role = computed(() => user.roles?.length ? user.roles[0].name : 'Super Administrador')
 
-const navSistema = [
-  { to: '/configuracoes', label: 'Configurações', icon: 'i-lucide-settings' },
-  { to: '/suporte', label: 'Suporte', icon: 'i-lucide-help-circle' },
-]
-
-const allNavItems = [...navPrincipal, ...navSistema]
+function handleSair() {
+  clearSession()
+  navigateTo('/auth')
+}
 
 const currentPageName = computed(() => {
   if (route.path === '/') return ''
-  const item = allNavItems.find((n) => n.to === route.path)
+  const item = allItems.find(n => n.to === route.path)
   return item?.label ?? 'Página'
 })
-
-// ////////////////////////////////////////////////
-
-import type { NavigationMenuItem } from '@nuxt/ui'
-
-const toast = useToast()
-
-const open = ref(false)
-
-const links = [[{
-    label: 'Principal',
-    type: 'label'
-  }, {
-  label: 'Início',
-  icon: 'i-lucide-house',
-  to: '/'
-}, {
-  label: 'Materiais',
-  icon: 'i-lucide-inbox',
-  to: '/a/materiais',
-  badge: '4'
-}, {
-  label: 'Materiais Exemplo',
-  icon: 'i-lucide-users',
-  to: '/materiais'
-}, {
-  label: 'Settings',
-  to: '/settings',
-  icon: 'i-lucide-settings',
-  defaultOpen: false,
-  type: 'trigger',
-  children: [{
-    label: 'General',
-    to: '/settings',
-    exact: true
-  }, {
-    label: 'Members',
-    to: '/settings/members'
-  }, {
-    label: 'Notifications',
-    to: '/settings/notifications'
-  }, {
-    label: 'Security',
-    to: '/settings/security'
-  }]
-}], [{
-  label: 'Feedback',
-  icon: 'i-lucide-message-circle',
-  to: 'https://github.com/nuxt-ui-templates/dashboard',
-  target: '_blank'
-}, {
-  label: 'Help & Support',
-  icon: 'i-lucide-info',
-  to: 'https://github.com/nuxt-ui-templates/dashboard',
-  target: '_blank'
-}]] satisfies NavigationMenuItem[][]
-
-const groups = computed(() => [{
-  id: 'links',
-  label: 'Go to',
-  items: links.flat()
-}, {
-  id: 'code',
-  label: 'Code',
-  items: [{
-    id: 'source',
-    label: 'View page source',
-    icon: 'i-simple-icons-github',
-    to: `https://github.com/nuxt-ui-templates/dashboard/blob/main/app/pages${route.path === '/' ? '/index' : route.path}.vue`,
-    target: '_blank'
-  }]
-}])
 
 
 </script>

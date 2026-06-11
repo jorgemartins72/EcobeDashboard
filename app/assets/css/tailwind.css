@@ -61,6 +61,26 @@
   body {
     @apply text-slate-800;
   }
+
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 1000px white inset !important;
+    box-shadow: 0 0 0 1000px white inset !important;
+    -webkit-text-fill-color: #334155 !important;
+  }
+}
+
+/* Sobrescreve variáveis e comportamento do UNavigationMenu dentro da sidebar */
+.scrollbar-sidebar {
+  --ui-text-muted:       var(--color-gray-400);
+  --ui-text-highlighted: var(--color-gray-400);
+}
+.scrollbar-sidebar [data-slot="link"]:hover::before {
+  background-color: var(--color-sidebar-hover);
+}
+.scrollbar-sidebar [data-slot="link"][aria-current="page"]::before {
+  background-color: var(--color-sidebar-active);
 }
 
 @layer components {

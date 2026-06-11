@@ -65,6 +65,7 @@ const classes: Record<string, Record<string, boolean>> = {
     "px-7": true,
     "py-3": true,
     "mb-1.5": true,
+    "text-white": true,
   },
   "family:box__wrapper": {
     "inline-flex": true,

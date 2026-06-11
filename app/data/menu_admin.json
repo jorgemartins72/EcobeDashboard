@@ -1,0 +1,23 @@
+[
+  [
+    {
+      "label": "Administração",
+      "type": "label"
+    },
+    {
+      "label": "Início",
+      "icon": "i-lucide-house",
+      "to": "/"
+    },
+    {
+      "label": "Materiais",
+      "icon": "i-lucide-inbox",
+      "to": "/a/materiais"
+    },
+    {
+      "label": "Usuários",
+      "icon": "i-lucide-users",
+      "to": "/a/usuarios"
+    }
+  ]
+]

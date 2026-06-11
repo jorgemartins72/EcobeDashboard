@@ -77,8 +77,7 @@ function handleLogin() {
         method: 'POST',
         body: { email: form.email, password: form.password }
       })
-      setSession({ access_token: res.access_token, refresh_token: res.refresh_token })
-      toast.success('Logado com sucesso')
+      setSession({ access_token: res.access_token, refresh_token: res.refresh_token, user: res.user })
       await navigateTo('/')
     } catch (err) {
       const code = err?.data?.detail?.code

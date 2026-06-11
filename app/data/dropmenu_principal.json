@@ -1,0 +1,14 @@
+[
+  [
+    {
+      "label": "Início",
+      "icon": "i-lucide-house",
+      "to": "/"
+    },
+    {
+      "label": "Materiais",
+      "icon": "i-lucide-inbox",
+      "to": "/a/materiais"
+    }
+  ]
+]

@@ -1,0 +1,64 @@
+[
+  [
+    {
+      "label": "Menu",
+      "type": "label"
+    },
+    {
+      "label": "Início",
+      "icon": "i-lucide-house",
+      "to": "/"
+    },
+    {
+      "label": "Materiais",
+      "icon": "i-lucide-inbox",
+      "to": "/a/materiais"
+    },
+    {
+      "label": "Materiais Exemplo",
+      "icon": "i-lucide-package-x",
+      "to": "/materiais",
+      "badge": "4"
+    },
+    {
+      "label": "Settings",
+      "icon": "i-lucide-settings",
+      "to": "/settings",
+      "defaultOpen": false,
+      "type": "trigger",
+      "children": [
+        {
+          "label": "General",
+          "to": "/settings",
+          "exact": true
+        },
+        {
+          "label": "Members",
+          "to": "/settings/members"
+        },
+        {
+          "label": "Notifications",
+          "to": "/settings/notifications"
+        },
+        {
+          "label": "Security",
+          "to": "/settings/security"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "label": "Feedback",
+      "icon": "i-lucide-message-circle",
+      "to": "https://github.com/nuxt-ui-templates/dashboard",
+      "target": "_blank"
+    },
+    {
+      "label": "Help & Support",
+      "icon": "i-lucide-info",
+      "to": "https://github.com/nuxt-ui-templates/dashboard",
+      "target": "_blank"
+    }
+  ]
+]
