@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p class="text-2xl font-semibold">Esqueceu a senha?</p>
+    <p class="text-2xl font-semibold mb-8">Esqueceu a senha?</p>
     <p class="text-base">Informe o e-mail cadastrado abaixo</p>
     <div class="mt-2">
       <FormKit type="group">
@@ -46,11 +46,11 @@ function handleForgot() {
 
   withLoading(async () => {
     try {
-      const res = await api('/auth/forgot-password', { method: 'POST', body: form })
-      toast.info(res.message || 'Instruções enviadas para seu e-mail')
-      goTo('login')
+      await api('/auth/forgot/solicitar', { method: 'POST', body: form })
+      toast.success('Código enviado para o e-mail informado.')
+      goTo('forgot-verificar', { email: form.email })
     } catch (err) {
-      toast.error(err?.data?.message || 'Erro ao solicitar recuperação de senha')
+      toast.big_warning(err?.data?.detail?.message || err?.data?.message || 'Erro ao solicitar recuperação de senha')
     }
   })
 }

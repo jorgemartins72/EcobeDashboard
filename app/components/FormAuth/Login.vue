@@ -1,8 +1,8 @@
 <template>
   <div>
-    <p class="text-2xl font-semibold">Login</p>
+    <p class="text-2xl font-semibold mb-8">Login</p>
     <div>
-      <div class="mt-8">
+      <div>
         <ButtonGoogle />
       </div>
     </div>
@@ -62,7 +62,7 @@ const { api } = useApi()
 const { setSession } = useSession()
 const { isLoading: loading, withLoading } = useLoadingButton()
 
-const form = reactive({ email: 'jorgemartins72@gmail.com', password: 'xxxxx' })
+const form = reactive({ email: 'jomackroll@gmail.com', password: 'ddddd' })
 const showPassword = ref(false)
 
 function handleLogin() {
@@ -79,8 +79,11 @@ function handleLogin() {
       toast.success('Logado com sucesso')
       await navigateTo('/')
     } catch (err) {
-      if (err?.data?.detail?.code === 'PASSWORD_NOT_SET') {
+      const code = err?.data?.detail?.code
+      if (code === 'PASSWORD_NOT_SET') {
         goTo('primeiro-acesso')
+      } else if (code === 'USER_INACTIVE') {
+        toast.big_warning(err?.data?.detail?.message || 'Usuário inativo.')
       } else {
         toast.error(err?.data?.detail?.message || err?.data?.message || 'E-mail ou senha incorretos')
       }

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p class="text-2xl font-semibold">Primeiro acesso</p>
+    <p class="text-2xl font-semibold mb-8">Primeiro acesso</p>
     <p class="text-base">Esse é o seu primeiro acesso ao sistema. Confirme o e-mail cadastrado para receber o código de acesso e criar sua senha.</p>
     <div class="mt-2">
       <FormKit type="group">
@@ -39,7 +39,7 @@ const toast = useAppToast()
 const { api } = useApi()
 const { isLoading: loading, withLoading } = useLoadingButton()
 
-const form = reactive({ email: 'jorgemartins72@gmail.com' })
+const form = reactive({ email: '' })
 
 function handleSolicitar() {
   if (!form.email.trim()) { toast.error('Informe seu e-mail'); return }

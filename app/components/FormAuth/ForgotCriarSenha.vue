@@ -1,7 +1,7 @@
 <template>
   <div>
-    <p class="text-2xl font-semibold">Criar senha</p>
-    <p class="text-base">Defina uma senha para acessar o sistema.</p>
+    <p class="text-2xl font-semibold">Nova senha</p>
+    <p class="text-base">Defina uma nova senha para acessar o sistema.</p>
     <div class="mt-2">
       <FormKit type="group">
         <FormKit
@@ -43,7 +43,7 @@
         />
 
         <div :class="{ 'pointer-events-none': loading }" @click="handleCriar">
-          <FormKit type="button" label="Criar senha" :outer-class="loading ? 'is-loading' : ''" />
+          <FormKit type="button" label="Salvar senha" :outer-class="loading ? 'is-loading' : ''" />
         </div>
       </FormKit>
 
@@ -74,13 +74,11 @@ function handleCriar() {
 
   withLoading(async () => {
     try {
-      // console.log('[CriarSenha] enviando:', { setup_token: setupToken, password: form.password })
-      const res = await api('/auth/primeiro-acesso/senha', { method: 'POST', body: { setup_token: setupToken, password: form.password } })
-      toast.success(res.message || 'Senha criada com sucesso!')
+      const res = await api('/auth/forgot/senha', { method: 'POST', body: { setup_token: setupToken, password: form.password } })
+      toast.success(res.message || 'Senha redefinida com sucesso!')
       goTo('login')
     } catch (err) {
-      // console.error('[CriarSenha] erro completo:', JSON.stringify(err?.data ?? err, null, 2))
-      toast.warning(err?.data?.detail || 'Erro ao criar senha')
+      toast.error(err?.data?.message || 'Erro ao redefinir senha')
     }
   })
 }

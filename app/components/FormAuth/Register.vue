@@ -35,43 +35,6 @@
           :classes="{ message: 'text-red-700 text-sm' }"
         />
 
-        <FormKit
-          :type="showPassword ? 'text' : 'password'"
-          name="password"
-          label="Senha"
-          v-model="form.password"
-          validation="required"
-          validation-visibility="dirty"
-          autocomplete="new-password"
-          minlength="6"
-          :suffix-icon="showPassword ? 'eye' : 'eyeClosed'"
-          suffix-icon-class="cursor-pointer"
-          @suffix-icon-click="showPassword = !showPassword"
-          :validation-messages="{
-            required: 'Informe sua senha',
-            minlength: 'A senha deve conter no mínimo 6 caracteres'
-          }"
-          :classes="{ message: 'text-red-700 text-sm' }"
-        />
-
-        <FormKit
-          :type="showPasswordConfirm ? 'text' : 'password'"
-          name="password_confirm"
-          label="Confirmar Senha"
-          validation="required|confirm"
-          validation-visibility="dirty"
-          autocomplete="new-password"
-          minlength="6"
-          :suffix-icon="showPasswordConfirm ? 'eye' : 'eyeClosed'"
-          suffix-icon-class="cursor-pointer"
-          @suffix-icon-click="showPasswordConfirm = !showPasswordConfirm"
-          :validation-messages="{
-            confirm: 'As senhas não conferem',
-            minlength: 'A senha deve conter no mínimo 6 caracteres'
-          }"
-          :classes="{ message: 'text-red-700 text-sm' }"
-        />
-
         <div :class="{ 'pointer-events-none': loading }" @click="handleRegister">
           <FormKit type="button" label="Enviar" :outer-class="loading ? 'is-loading' : ''" />
         </div>
@@ -86,30 +49,24 @@
 
 <script setup>
 import { useApi } from '~/composables/useApi'
-import { useSession } from '~/composables/useSession'
 import { useAppToast } from '~/composables/useToast'
 
 const { goTo } = defineProps({ goTo: { type: Function, required: true } })
 
 const toast = useAppToast()
 const { api } = useApi()
-const { setSession } = useSession()
 const { isLoading: loading, withLoading } = useLoadingButton()
 
-const form = reactive({ nome: '', email: '', password: '' })
-const showPassword = ref(false)
-const showPasswordConfirm = ref(false)
+const form = reactive({ nome: '', email: '' })
 
 function handleRegister() {
   if (!form.nome.trim()) { toast.error('Informe seu nome'); return }
   if (!hasNomeSobrenome(form.nome)) { toast.error('Informe nome e sobrenome'); return }
   if (!form.email.trim()) { toast.error('Informe seu e-mail'); return }
-  if (!form.password.trim()) { toast.error('Informe sua senha'); return }
 
   withLoading(async () => {
     try {
       const res = await api('/auth/register', { method: 'POST', body: form })
-      setSession({ access_token: res.access_token, refresh_token: res.refresh_token })
       toast.success(res.message || 'Cadastro realizado com sucesso')
       goTo('login')
     } catch (err) {

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p class="text-2xl font-semibold mb-8">Verificar código</p>
+    <p class="text-2xl font-semibold">Verificar código</p>
     <p class="text-base">Digite o código enviado para o seu e-mail para continuar.</p>
     <div class="mt-2">
       <FormKit type="group">
@@ -45,9 +45,9 @@ function handleVerificar() {
 
   withLoading(async () => {
     try {
-      const res = await api('/auth/primeiro-acesso/verificar', { method: 'POST', body: { email: form.email, code: form.code } })
+      const res = await api('/auth/forgot/verificar', { method: 'POST', body: { email: form.email, code: form.code } })
       toast.success(res.message || 'Código verificado com sucesso.')
-      goTo('criar-senha', { setup_token: res.setup_token })
+      goTo('forgot-senha', { setup_token: res.setup_token })
     } catch (err) {
       toast.error(err?.data?.message || 'Código inválido ou expirado')
     }
