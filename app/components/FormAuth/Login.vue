@@ -1,12 +1,14 @@
 <template>
   <div>
     <p class="text-2xl font-semibold mb-8">Login</p>
-    <div>
+
+    <!-- <div>
       <div>
         <ButtonGoogle />
       </div>
     </div>
-    <Divider label="Ou" />
+    <Divider label="Ou" /> -->
+
     <div>
       <FormKit type="group">
         <FormKit

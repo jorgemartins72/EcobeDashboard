@@ -1,12 +1,14 @@
 <template>
   <div>
-    <p class="text-2xl font-semibold">Crie sua conta</p>
-    <div>
+    <p class="text-2xl font-semibold mb-8">Crie sua conta</p>
+
+    <!-- <div>
       <div class="mt-8">
         <ButtonGoogle />
       </div>
     </div>
-    <Divider label="Ou" />
+    <Divider label="Ou" /> -->
+
     <div>
       <FormKit type="group">
         <FormKit
